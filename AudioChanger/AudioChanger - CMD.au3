@@ -10,7 +10,6 @@ Func _openSoundDevices()
 	Local $bAlreadyOpen = WinExists($sSound)
   ShellExecute("mmsys.cpl")
   WinWait($sSound)
-  ConsoleWrite($bAlreadyOpen & @crlf)
 	Return $bAlreadyOpen
 EndFunc   ;==>_openSoundDevices
 
@@ -18,16 +17,16 @@ EndFunc   ;==>_openSoundDevices
 Func _findNextDevice()
 	Local $iRet = 0, $iCurrentDevice = -1
 	$iNumberOfDevices = ControlListView($sSound, "", "SysListView321", "GetItemCount") - 1
-  ; loop through all devices
+  ; loop through all devices until we find the currently enabled device
 	Do
-		$iCurrentDevice += 1
+		$iCurrentDevice += 1 
 		ControlListView($sSound, "", "SysListView321", "Select", $iCurrentDevice)
 		$bDeviceEnabled = ControlCommand($sSound, "", "Button2", 'IsEnabled')
 	Until $bDeviceEnabled = False Or $iNumberOfDevices == $iCurrentDevice
-	If $iNumberOfDevices == $iCurrentDevice Then
-		Return 0
-	Else
-		Return $iCurrentDevice
+  $iCurrentDevice += 1
+	If $iCurrentDevice > $iNumberOfDevices Then
+		$iCurrentDevice = 0
 	EndIf
+  Return $iCurrentDevice
 EndFunc   ;==>_findNextDevice
 
