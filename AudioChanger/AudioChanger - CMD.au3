@@ -1,8 +1,8 @@
 Global $bSpeakers, $sSound = "Sound", $iCurrentDevice = -1
 
 $bAlreadyOpen = _openSoundDevices()
-$iNext = _findNextDevice()
-ControlListView($sSound, "", "SysListView321", "Select", $iNext)
+ControlListView($sSound, "", "SysListView321", "Select", _findNextDevice())
+ControlClick($sSound, "", "Button2") ; Set Default
 If Not $bAlreadyOpen Then WinClose($sSound)
 Exit
 
