@@ -2,7 +2,7 @@ Global $bSpeakers, $sSound = "Sound", $iCurrentDevice = -1
 
 $bAlreadyOpen = _openSoundDevices()
 $iNext = _findNextDevice()
-ControlListView($sSound, "", "SysListView321", "Select", $iCurrentDevice)
+ControlListView($sSound, "", "SysListView321", "Select", $iNext)
 If Not $bAlreadyOpen Then WinClose($sSound)
 Exit
 
